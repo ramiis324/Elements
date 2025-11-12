@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script> <script> tailwind.config = { corePlugins: { preflight: false, }, } </script>
+  <style>
+    :root {
+        --bg: #fff;
+        --text: #000;
+        }
+  </style>
+</head>
+<body class="bg-[--bg] text-[--text] flex flex-col items-center justify-center min-h-screen transition-colors duration-500">
+  <h1 id="mode-text">Light Mode</h1>
+  <button id="swap-btn" class="">click to switch themes</button>
+  <script>
+    const root = document.documentElement;
+    const modeText = document.getElementById('mode-text');
+    const swapBtn = document.getElementById('swap-btn');
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.style.setProperty('--bg', '#000')
+      document.documentElement.style.setProperty('--text', '#fff')
+      modeText.textContent = 'Dark Mode';
+      root.classList.add('dark');
+    } else {
+      document.documentElement.style.setProperty('--bg', '#fff')
+        document.documentElement.style.setProperty('--text', '#000')
+        modeText.textContent = 'Light Mode';
+      root.classList.add('light');
+    }
+    if (localStorage.getItem('theme')) {
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.style.setProperty('--bg', '#000')
+        document.documentElement.style.setProperty('--text', '#fff')
+        modeText.textContent = 'Dark Mode';
+        const isDark = root.classList.add('dark')
+      } else {
+        document.documentElement.style.setProperty('--bg', '#fff')
+        document.documentElement.style.setProperty('--text', '#000')
+        modeText.textContent = 'Light Mode';
+        const isDark = root.classList.add('light')
+      }
+      
+    }
+    swapBtn.addEventListener('click', () => {
+      if (document.body.classList.contains('bg-[--bg]') && getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() === '#000') {
+        document.documentElement.style.setProperty('--bg', '#fff')
+        document.documentElement.style.setProperty('--text', '#000')
+        modeText.textContent = 'Light Mode';
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.style.setProperty('--bg', '#000')
+        document.documentElement.style.setProperty('--text', '#fff')
+        modeText.textContent = 'Dark Mode';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+
+  </script>
+</body>
+</html>
