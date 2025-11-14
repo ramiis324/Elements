@@ -1,4 +1,74 @@
-<nav class="w-[90%] max-w-3xl h-10 p-2 rounded-full bg-white fixed mt-[10%] max-mt-14 shadow-lg flex justify-between items-center gap-4 hover:shadow-xl transition-shadow duration-300">
-    <p class="text-xl m-auto ml-2 font-bold">Lorem Ipsum</p>
-    <button class="w-[15%] h-[100%] rounded-full border-none bg-blue-500 text-[2vh] text-white font-[Quicksand] hover:bg-blue-600 active:bg-blue-700 transition-colors duration-300">Sign Up</button>
-   </nav> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script> <script> tailwind.config = { corePlugins: { preflight: false, }, } </script>
+  <style>
+    :root {
+        --bg: oklch(96.8% 0.007 247.896);
+        --lightest: oklch(98.4% 0.003 247.858);
+        --text: black;
+        }
+  </style>
+</head>
+<body class="flex justify-center items-center font-[Quicksand] bg-[--bg] transition-all duration-500">
+  <nav class="w-[90%] max-w-3xl h-10 flex flex-row fixed mt-[10%] max-mt-14">
+    <div class="w-[83%] max-w-3xl h-10 bg-[--lightest] p-2 rounded-full shadow-lg flex justify-between items-center gap-4 hover:shadow-xl transition-shadow duration-300">
+    <p class="text-xl text-[--text] m-auto ml-2 font-bold">Lorem Ipsum</p>
+    <button class="w-[15%] min-w-max h-[100%] rounded-full border-none bg-blue-500 text-[2vh] text-white font-[Quicksand] hover:bg-blue-600 active:bg-blue-700 transition-colors duration-300">Sign Up</button>
+    </div>
+    <button id="swap-btn" class="ml-auto min-w-14 min-h-14 bg-[--lightest] border-none p-2 rounded-full h-max shadow-md hover:shadow-lg transition-color duration-300 text-[--text] flex items-center justify-center"><img id="mode-display" class="w-max max-h-5"></button>
+  </nav>
+   <script>
+    const root = document.documentElement;
+    const swapBtn = document.getElementById('swap-btn');
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.style.setProperty('--bg', 'oklch(27.9% 0.041 260.031)')
+      document.documentElement.style.setProperty('--lightest', 'oklch(37.2% 0.044 257.287)')
+      document.documentElement.style.setProperty('--text', 'white')
+      document.getElementById('mode-display').src = 'moon.svg';
+      root.classList.add('dark');
+    } else {
+      document.documentElement.style.setProperty('--bg', 'oklch(96.8% 0.007 247.896)')
+      document.documentElement.style.setProperty('--lightest', 'oklch(98.4% 0.003 247.858)')
+        document.documentElement.style.setProperty('--text', 'black')
+        document.getElementById('mode-display').src = 'brightness.svg';
+      root.classList.add('light');
+    }
+    if (localStorage.getItem('theme')) {
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.style.setProperty('--bg', 'oklch(27.9% 0.041 260.031)')
+        document.documentElement.style.setProperty('--lightest', 'oklch(37.2% 0.044 257.287)')
+        document.documentElement.style.setProperty('--text', 'white')
+        document.getElementById('mode-display').src = 'moon.svg';
+        const isDark = root.classList.add('dark')
+      } else {
+        document.documentElement.style.setProperty('--bg', 'oklch(96.8% 0.007 247.896)')
+        document.documentElement.style.setProperty('--lightest', 'oklch(98.4% 0.003 247.858)')
+        document.documentElement.style.setProperty('--text', 'black')
+        document.getElementById('mode-display').src = 'brightness.svg';
+        const isDark = root.classList.add('light')
+      }
+      
+    }
+    swapBtn.addEventListener('click', () => {
+      if (document.body.classList.contains('bg-[--bg]') && getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() === 'oklch(27.9% 0.041 260.031)') {
+        document.documentElement.style.setProperty('--bg', 'oklch(96.8% 0.007 247.896)')
+        document.documentElement.style.setProperty('--lightest', 'oklch(98.4% 0.003 247.858)')
+        document.documentElement.style.setProperty('--text', 'black')
+        document.getElementById('mode-display').src = 'brightness.svg';
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.style.setProperty('--bg', 'oklch(27.9% 0.041 260.031)')
+        document.documentElement.style.setProperty('--lightest', 'oklch(37.2% 0.044 257.287)')
+        document.documentElement.style.setProperty('--text', 'white')
+        document.getElementById('mode-display').src = 'moon.svg';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+   </script>
+</body>
+</html>
